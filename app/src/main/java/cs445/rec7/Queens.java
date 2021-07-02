@@ -10,7 +10,14 @@ public class Queens {
      */
     public static boolean isFullSolution(int[] partial) {
         // TODO: Implement this method
-        return false;
+        for (int i = 7; i >= 0; i--)
+        {
+            if (partial[i] == 0)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -21,6 +28,39 @@ public class Queens {
      */
     public static boolean reject(int[] partial) {
         // TODO: Implement this method
+
+        //compare every pair of queens
+        //diff colm, queens are not in same
+        //positive or negative diagonal, slope = +/-1
+
+        for (int i=0; i<8; i++)
+        {
+            for (int k =0; k< i; k++)
+            {   
+                //there's a queen that hasnt been placed yet
+                //not a conflict yet
+                if (partial[i] == 0 || partial[k] == 0)
+                {
+                    continue;
+                }
+                else if ( i!= k && partial[i] == partial[k])
+                {
+                    //there is a conflict
+                    return true;
+                }
+                //positive diagonal
+                else if (partial[i] - partial[k] == i-k)
+                {
+                    return true;
+                }
+                //negative diagonal
+                else if (partial[i] - partial[k] == k-i)
+                {
+                    return true;
+                }
+            }
+        }
+        //no pair conflict found
         return false;
     }
 
@@ -31,6 +71,23 @@ public class Queens {
      */
     public static int[] extend(int[] partial) {
         // TODO: implement this method
+
+        int[] temp = new int[8];
+        for (int i = 0; i < 8; i++)
+        {
+            if (partial[i]!=0)
+            {
+                temp[i]=partial[i];
+            }
+            else
+            {
+                temp[i] = 1;
+                return temp;
+            }
+        }
+
+
+        //no queen can be added, all are already placed
         return null;
     }
 
@@ -42,7 +99,30 @@ public class Queens {
      */
     public static int[] next(int[] partial) {
         // TODO: implement this method
-        return null;
+        int[] temp = new int[8];
+        int i = 0;
+        while (i<8)
+        {
+            //change position of last placed queen
+            if (i==7 || partial[i+1] == 0)
+            {
+                if (partial[i] == 8)
+                {
+                    return null;
+                }
+                else
+                {
+                    temp[i] = partial[i] + 1;
+                }
+            }
+            else
+            {
+                temp[i]= partial[i];
+            }
+            i++;
+        }
+
+        return temp;
     }
 
     /**
